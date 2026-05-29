@@ -4215,10 +4215,9 @@ function generateQRCode() {
     }
 
     const sessionId = (UNIFEDSystem.sessionId || 'SESSAO_INDISPONIVEL').toUpperCase();
-    // ASCII puro (sem acentos) → modo alfanumérico qrcodejs.
-    // Payload: "Sessao:" (7) + sessionId + " Master Hash SHA-256:" (21) + hash (64) ≤ ~113 chars.
-    // Nível Q a 128px → capacidade ~149 chars alfanuméricos. Sem overflow.
-    const qrData = `Sessao:${sessionId} Master Hash SHA-256:${masterHash}`;
+
+    // <-- RETIFICAÇÃO 4: Alinhamento de sintaxe com o PDF (gerarQRCodeDataURL)
+    const qrData = `SESSAO:${sessionId} MASTER HASH SHA-256:${masterHash}`;
 
     // Activar lock para permitir que a vacina HTML deixe passar esta escrita legítima
     window._qrCodeLock = true;
@@ -6754,7 +6753,8 @@ async function exportPDF() {
         // Payload total ≤ ~113 chars. Nível Q a 256px → capacidade ~196 chars.
         const _qrHashFull  = (UNIFEDSystem.masterHash || 'HASH_INDISPONIVEL').toUpperCase();
         const _qrSessionId = (UNIFEDSystem.sessionId  || 'SESSAO_INDISPONIVEL').toUpperCase();
-        const _qrPayload   = `Sessao:${_qrSessionId} Master Hash SHA-256:${_qrHashFull}`;
+        // <-- RETIFICAÇÃO 4b: formato canonico alinhado com generateQRCode() e gerarQRCodeDataURL()
+        const _qrPayload   = `SESSAO:${_qrSessionId} MASTER HASH SHA-256:${_qrHashFull}`;
 
         const _qrDataUrl = await new Promise((resolve) => {
             if (typeof QRCode === 'undefined') { resolve(null); return; }

@@ -589,7 +589,8 @@
                 triadaLog('warn', `QR: masterHash com comprimento inválido (${hashNorm.length} chars); esperado 64`);
             }
 
-            const qrData = `SESSION:${sessionNorm} SH:${hashNorm}`;
+            // <-- RETIFICAÇÃO 3: Formato exacto do Payload do QR Code — alinhado com script.js
+            const qrData = `SESSAO:${sessionNorm} MASTER HASH SHA-256:${hashNorm}`;
             triadaLog('info', `QR code a codificar ${qrData.length} chars (modo Alfanumérico, versão 7)`);
 
             const div = document.createElement('div');
@@ -1676,7 +1677,7 @@
         ]);
 
         const docDefinition = {
-            pageMargins: [40, 60, 40, 85], // <-- RETIFICAÇÃO 3A: rodapé 65→85 para eliminar sobreposição
+            pageMargins: [40, 60, 40, 110], // <-- RETIFICAÇÃO 2: margem inferior 85→110 — clearance suficiente para rodapé
             content: construirConteudoDinamicoAnalista(m, sankeyImg, atfImg, qrCodeImg),
             footer: function(currentPage, pageCount) {
                 return {
@@ -1793,7 +1794,7 @@
         );
 
         const docDef = {
-            pageMargins: [40, 60, 40, 65],
+            pageMargins: [40, 60, 40, 110], // <-- RETIFICAÇÃO 2: margem inferior 65→110 — clearance suficiente para rodapé
             content: contentCustodia,
             footer: function(currentPage, pageCount) {
                 return {
