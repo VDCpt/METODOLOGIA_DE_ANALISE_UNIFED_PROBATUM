@@ -11371,9 +11371,7 @@ window.openATFModal = function() {
         const canvas = document.getElementById('atfChartCanvas');
         if (canvas) {
             canvas.style.width  = '100%';
-            canvas.style.height = '320px';
-            canvas.style.minHeight = '280px';
-            canvas.style.maxHeight = '380px';
+            // RETIFICAÇÃO: height/minHeight/maxHeight dinâmicos removidos — primazia do CSS (#atfTrendChartContainer height: 280px)
             canvas.style.display = 'block';
         }
         const forecastPanel = document.getElementById('nexusForecastPanel');

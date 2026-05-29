@@ -669,9 +669,9 @@
             margin: [0, 30, 0, 20]
         });
 
-        // AVISO DE CONFIDENCIALIDADE (Fixo no fundo da Pág 1) — RETIFICAÇÃO 3B: absolutePosition
+        // AVISO DE CONFIDENCIALIDADE (Recalibrado para evitar colisão de eixo Y com rodapé) — RETIFICAÇÃO 1A: y=680→615
         content.push({
-            absolutePosition: { x: 40, y: 680 },
+            absolutePosition: { x: 40, y: 615 },
             table: {
                 widths: ['*'],
                 body: [[{
@@ -777,7 +777,7 @@
                 ]
             },
             layout: { ...'lightHorizontalLines', dontBreakRows: true },
-            fontSize: 9 // <-- RETIFICAÇÃO 3C: lettering reduzido -1.5pt
+            fontSize: 7.5 // <-- RETIFICAÇÃO 1B: Redução de 1.5pt (9→7.5) — mitiga quebra de linha do símbolo monetário
         };
         content.push(tabelaCruzada);
         content.push(
@@ -911,7 +911,7 @@
                 ]
             },
             layout: { ...'lightHorizontalLines', dontBreakRows: true },
-            fontSize: 9 // <-- RETIFICAÇÃO 3C: lettering reduzido -1.5pt
+            fontSize: 7.5 // <-- RETIFICAÇÃO 1B: Redução de 1.5pt (9→7.5) — mitiga quebra de linha do símbolo monetário
         };
         content.push(fiscalTable);
         content.push(
@@ -980,7 +980,7 @@
             content.push(
                 { text: formatHeading('ANÁLISE TEMPORAL FORENSE (ATF) — TENDÊNCIAS · OUTLIERS 2σ · ÍNDICE DE RECIDIVA', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 8], tocItem: true },
                 { text: sanitizeText('Gráfico temporal derivado dos extratos mensais processados. Outliers marcados a vermelho (> 2σ) indicam meses com anomalia estatística — constitui indício de comportamento oportunístico para efeitos do Art. 104.º RGIT.'), style: 'normal', color: '#64748b', margin: [0, 0, 0, 8], lineHeight: 1.5 },
-                { image: atfImage, fit: [515, 230], alignment: 'center', margin: [0, 10, 0, 10] } // <-- RETIFICAÇÃO 3D: fit geométrico, previne expansão vertical
+                { image: atfImage, width: 515, height: 160, alignment: 'center', margin: [0, 10, 0, 10] } // <-- RETIFICAÇÃO 1C: dimensões fixas (width/height) anulam expansão do DataURI
             );
             const monthlyData = window.UNIFEDSystem?.monthlyData || {};
             const monthsKeys = (m.dataMonths && m.dataMonths.length) 
