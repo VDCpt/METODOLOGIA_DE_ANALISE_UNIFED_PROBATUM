@@ -1,0 +1,1483 @@
+/* ============================================================================
+   UNIFED - PROBATUM · v13.5.6-FORENSIC-CORPORATE · ESTILOS DO PAINEL DE CASO REAL
+   ============================================================================
+   Escopo      : Seletor raiz #pureDashboard — sem conflito com estilos base.
+   Variáveis   : Consome as CSS custom properties existentes em style.css base.
+                 Fallbacks definidos para standalone rendering.
+   Conformidade: WCAG 2.1 AA · Palette forense (dark + alert accents).
+   ============================================================================ */
+
+/* ── Variáveis globais PURE (partilhadas com style.css base) ────────────────── */
+/* NOTA: Duplicadas aqui para standalone rendering; style.css tem precedência
+   quando ambos os ficheiros são carregados em conjunto (cascade normal). */
+:root {
+    --pure-accent:  #00E5FF; /* Cyan Forense */
+    --pure-warn:    #EF4444; /* Alerta Fiscal */
+    --pure-version: "v13.5.6-FORENSIC-CORPORATE";
+}
+
+/* ── Wrapper do painel PURE — transição de entrada ──────────────────────────── */
+/* ATENÇÃO: style.css define opacity:0 com transição para fade-in controlado por JS.
+   Este selector actua em modo standalone (sem style.css carregado). */
+#pureDashboardWrapper {
+    opacity: 1;
+    transition: all 0.4s ease-in-out;
+}
+
+/* ── Grid de painéis (pure-card-grid) ───────────────────────────────────────── */
+.pure-card-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* espaçamento já gerido pelo margin-bottom de .pure-card */
+    width: 100%;
+}
+
+/* ── Variáveis locais com fallback ─────────────────────────────────────────── */
+#pureDashboard {
+  --pure-bg-card:      var(--bg-secondary,     rgba(13, 27, 42, 0.85));
+  --pure-bg-alert:     var(--bg-tertiary,      rgba(30, 41, 59, 0.7));
+  --pure-accent:       var(--accent-primary,   #00E5FF);
+  --pure-warn:         var(--warn-primary,     #EF4444);
+  --pure-warn-amber:   var(--warn-secondary,   #F59E0B);
+  --pure-success:      var(--success-color,    #10B981);
+  --pure-text:         var(--text-primary,     rgba(255,255,255,0.9));
+  --pure-text-muted:   var(--text-secondary,   rgba(255,255,255,0.5));
+  --pure-border:       rgba(0, 229, 255, 0.18);
+  --pure-border-alert: rgba(239, 68, 68, 0.35);
+  --pure-radius:       8px;
+  --pure-font-mono:    var(--font-mono, 'Courier New', 'JetBrains Mono', monospace);
+}
+
+/* ── Secção raiz ───────────────────────────────────────────────────────────── */
+.pure-section {
+  max-width: 100%;
+  margin: 32px auto;
+  padding: 0 16px;
+  font-family: var(--pure-font-mono);
+}
+
+/* ── Header da secção ─────────────────────────────────────────────────────── */
+.pure-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid var(--pure-border);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.pure-section-title {
+  color: var(--pure-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pure-badge-version {
+  background: rgba(0, 229, 255, 0.12);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  color: var(--pure-accent);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+}
+
+.pure-session-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.65rem;
+  color: var(--pure-text-muted);
+}
+
+.pure-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.pure-mono    { font-family: var(--pure-font-mono); }
+.pure-hash    { color: var(--pure-accent); font-size: 0.65rem; letter-spacing: 0.04em; }
+.pure-hash-lg { color: var(--pure-accent); font-size: 0.8rem;  letter-spacing: 0.04em; }
+
+/* ── Cards ────────────────────────────────────────────────────────────────── */
+.pure-card {
+  background: var(--pure-bg-card);
+  border: 1px solid var(--pure-border);
+  border-radius: var(--pure-radius);
+  padding: 20px 22px;
+  margin-bottom: 16px;
+}
+
+.pure-card-alert {
+  border-color: var(--pure-border-alert);
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.pure-card-verdict {
+  border-color: rgba(0, 229, 255, 0.3);
+  background: rgba(0, 229, 255, 0.04);
+}
+
+.pure-card-title {
+  color: var(--pure-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pure-icon { font-size: 1rem; }
+
+/* ── Grid financeiro ──────────────────────────────────────────────────────── */
+.pure-data-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.pure-3col { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+.pure-data-block {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.pure-data-label {
+  font-size: 0.62rem;
+  color: var(--pure-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.pure-data-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pure-value-primary { color: var(--pure-accent); }
+.pure-value-warn    { color: var(--pure-warn); }
+.pure-value-neutral { color: var(--pure-text); }
+
+.pure-data-sub {
+  font-size: 0.6rem;
+  color: var(--pure-text-muted);
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+/* ── Smoking Guns ─────────────────────────────────────────────────────────── */
+.pure-smoking-guns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.pure-sg {
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+
+.pure-sg-critical {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.4);
+  border-left: 4px solid var(--pure-warn);
+}
+
+.pure-sg-secondary {
+  background: rgba(245,158,11,0.06);
+  border: 1px solid rgba(245,158,11,0.3);
+  border-left: 4px solid var(--pure-warn-amber);
+}
+
+.pure-sg-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--pure-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.pure-sg-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 4px;
+}
+
+.pure-sg-key { opacity: 0.7; }
+.pure-sg-val { font-weight: 600; }
+
+.pure-sg-delta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.pure-delta-value { color: var(--pure-warn); font-size: 1.05rem; }
+.pure-delta-pct   { color: var(--pure-warn); opacity: 0.8; }
+
+.pure-sg-legal {
+  font-size: 0.58rem;
+  color: var(--pure-text-muted);
+  margin-top: 8px;
+  opacity: 0.6;
+}
+
+/* ── Linha fiscal ─────────────────────────────────────────────────────────── */
+.pure-fiscal-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.pure-fiscal-item {
+  background: rgba(0,229,255,0.04);
+  border: 1px solid rgba(0,229,255,0.15);
+  border-radius: 6px;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.pure-fiscal-label {
+  font-size: 0.6rem;
+  color: var(--pure-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.pure-fiscal-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--pure-warn-amber);
+}
+
+.pure-fiscal-sub {
+  font-size: 0.58rem;
+  color: var(--pure-text-muted);
+  margin-top: 4px;
+  opacity: 0.6;
+}
+
+/* ── ATF Grid ─────────────────────────────────────────────────────────────── */
+.pure-atf-grid {
+  display: grid;
+  grid-template-columns: 1fr repeat(3, auto);
+  gap: 14px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .pure-atf-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.pure-atf-block {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+
+/* --- REGRA SUBSTITUÍDA (RETIFICAÇÃO v13.5.6-R11) --- */
+.pure-atf-sp {
+    border-color: rgba(0,229,255,0.3);
+    background: rgba(0,229,255,0.05);
+}
+
+.pure-atf-label {
+  font-size: 0.6rem;
+  color: var(--pure-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.pure-atf-big {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--pure-warn-amber);
+  line-height: 1;
+}
+
+.pure-atf-classify {
+  font-size: 0.65rem;
+  color: var(--pure-warn-amber);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.pure-atf-bar {
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  height: 6px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.pure-atf-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+
+.pure-atf-trend-val {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--pure-success);
+  margin: 8px 0 4px;
+}
+
+.pure-atf-outlier-val {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--pure-success);
+  margin: 8px 0 4px;
+}
+
+.pure-atf-meses-val {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--pure-text);
+  margin: 8px 0 4px;
+}
+
+.pure-atf-sub {
+  font-size: 0.6rem;
+  color: var(--pure-text-muted);
+  opacity: 0.7;
+}
+
+.pure-atf-note {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(0,229,255,0.12);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+}
+
+.pure-atf-note strong { color: rgba(0,229,255,0.8); }
+.pure-atf-note em     { color: var(--pure-warn-amber); }
+.pure-atf-note code   { color: var(--pure-accent); font-size: 0.65rem; }
+
+.pure-btn-atf {
+  background: rgba(0,229,255,0.08);
+  border: 1px solid rgba(0,229,255,0.4);
+  color: var(--pure-accent);
+  cursor: pointer;
+  padding: 8px 20px;
+  font-family: var(--pure-font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  border-radius: 4px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.pure-btn-atf:hover {
+  background: rgba(0,229,255,0.16);
+  box-shadow: 0 0 16px rgba(0,229,255,0.2);
+}
+
+/* ── Zona Cinzenta ────────────────────────────────────────────────────────── */
+.pure-zc-intro {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.pure-zc-intro strong { color: var(--pure-accent); }
+
+.pure-zc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.pure-zc-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pure-zc-total {
+  border-color: rgba(0,229,255,0.2);
+  background: rgba(0,229,255,0.04);
+}
+
+.pure-zc-label { font-size: 0.62rem; color: var(--pure-text-muted); }
+.pure-zc-val   { font-size: 1.1rem; font-weight: 700; color: var(--pure-accent); }
+.pure-zc-tag   { font-size: 0.58rem; color: var(--pure-text-muted); opacity: 0.6; }
+
+.pure-zc-question {
+  background: rgba(0,229,255,0.04);
+  border: 1px solid rgba(0,229,255,0.15);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+}
+
+.pure-zc-question strong { color: rgba(0,229,255,0.8); }
+
+/* ── Veredicto ────────────────────────────────────────────────────────────── */
+.pure-verdict-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pure-verdict-block,
+.pure-integrity-block {
+  flex: 1;
+  min-width: 200px;
+}
+
+.pure-verdict-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pure-text-muted);
+  margin-bottom: 8px;
+}
+
+.pure-verdict-value {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--pure-warn);
+  letter-spacing: 0.04em;
+}
+
+.pure-verdict-pct {
+  font-size: 1rem;
+  color: var(--pure-warn);
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+.pure-verdict-basis {
+  font-size: 0.6rem;
+  color: var(--pure-text-muted);
+  margin-top: 6px;
+  opacity: 0.7;
+}
+
+/* ── Responsividade ───────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .pure-3col               { grid-template-columns: 1fr; }
+  .pure-smoking-guns        { grid-template-columns: 1fr; }
+  .pure-atf-grid            { grid-template-columns: 1fr; }
+  .pure-section-header      { flex-direction: column; align-items: flex-start; }
+  .pure-atf-big             { font-size: 1.8rem; }
+  .pure-verdict-value       { font-size: 1.2rem; }
+}
+
+/* ── Estado de carregamento ───────────────────────────────────────────────── */
+.pure-loading-placeholder::after {
+  content: '...';
+  animation: pure-dots 1.2s infinite;
+}
+
+@keyframes pure-dots {
+  0%   { content: '.'; }
+  33%  { content: '..'; }
+  66%  { content: '...'; }
+  100% { content: '.'; }
+}
+
+/* ============================================================================
+   UNIFED - PROBATUM · v13.5.6-FORENSIC-CORPORATE · ESTILOS COLARINHO BRANCO
+   ============================================================================
+   Card de Alerta de Criminalidade Financeira — Revelação Dinâmica
+   Indicadores de fraude fiscal com métricas quantificadas
+   ============================================================================ */
+
+/* ── Card Colarinho Branco (Criminalidade Financeira) ────────────────────── */
+.pure-card-white-collar {
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    background: rgba(239, 68, 68, 0.08) !important;
+}
+
+.pure-wc-intro {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.pure-wc-intro strong {
+    color: var(--pure-accent);
+}
+
+/* ── Grid de Indicadores ────────────────────────────────────────────────── */
+.pure-wc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.pure-wc-indicator {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-left: 4px solid #EF4444;
+    border-radius: 6px;
+    padding: 12px 14px;
+}
+
+.pure-wc-indicator-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #EF4444;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.pure-wc-indicator-value {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #EF4444;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.pure-wc-indicator-sub {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+}
+
+/* ── Secção de Conclusões Periciais ────────────────────────────────────── */
+.pure-wc-findings {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 1rem;
+}
+
+.pure-wc-findings strong {
+    color: #EF4444;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#pure-wc-findings-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#pure-wc-findings-list li {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+}
+
+#pure-wc-findings-list li::before {
+    content: '▪';
+    position: absolute;
+    left: 4px;
+    color: #EF4444;
+    font-weight: bold;
+}
+
+/* ── Secção de Recomendação ────────────────────────────────────────────── */
+.pure-wc-recommendation {
+    background: rgba(239, 68, 68, 0.08);
+    border-left: 4px solid #EF4444;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 1rem;
+}
+
+.pure-wc-recommendation strong {
+    color: #EF4444;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+}
+
+#pure-wc-rec-text {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.8;
+}
+
+/* ============================================================================
+   PATCH TERMINAL — v13.5.6-FORENSIC-CORPORATE · Boot Terminal Panorâmico de Elite
+   Escopo: #bootTerminalContainer, .pure-login-box, #consoleOutput (fallback)
+   Glassmorphism Forense: fundo translúcido + tipografia legível + scroll elegante
+   ============================================================================ */
+
+#bootTerminalContainer,
+.pure-login-box,
+#consoleOutput {
+    width: 100%;
+    max-width: 900px;
+    height: 350px;
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid #00e5ff;
+    border-radius: 8px;
+    padding: 24px;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
+
+    /* Tipografia legível e moderna */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #00e5ff;
+    text-align: left;
+
+    /* Transição suave de entrada */
+    transition: box-shadow 0.3s ease;
+}
+
+#bootTerminalContainer:hover,
+.pure-login-box:hover,
+#consoleOutput:hover {
+    box-shadow: 0 12px 40px rgba(0, 229, 255, 0.18);
+}
+
+/* Scrollbar elegante — não quebra imersão */
+#bootTerminalContainer::-webkit-scrollbar,
+.pure-login-box::-webkit-scrollbar,
+#consoleOutput::-webkit-scrollbar {
+    width: 6px;
+}
+
+#bootTerminalContainer::-webkit-scrollbar-track,
+.pure-login-box::-webkit-scrollbar-track,
+#consoleOutput::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#bootTerminalContainer::-webkit-scrollbar-thumb,
+.pure-login-box::-webkit-scrollbar-thumb,
+#consoleOutput::-webkit-scrollbar-thumb {
+    background: rgba(0, 229, 255, 0.3);
+    border-radius: 4px;
+}
+
+#bootTerminalContainer::-webkit-scrollbar-thumb:hover,
+.pure-login-box::-webkit-scrollbar-thumb:hover,
+#consoleOutput::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 229, 255, 0.55);
+}
+
+/* ==========================================================================
+   TOOLBAR UNIFICADA 9 BOTÕES LED — UNIFED v13.5.6-FORENSIC-CORPORATE
+   .pure-toolbar-unified é uma grelha de 20 colunas.
+   Linha 1: 4 × .l1-btn (span 5) — botões estáticos no HTML.
+   Linha 2: .triada-row ocupa as 20 colunas e contém os 4 botões
+            injectados pelo unifed_triada_export.js.
+   ========================================================================== */
+
+.pure-toolbar-unified {
+    display: grid !important;
+    grid-template-columns: repeat(20, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 20px 0 16px 0 !important;
+    align-items: stretch;
+}
+
+/* Linha 1: 4 botões operacionais */
+.pure-toolbar-unified .l1-btn {
+    grid-column: span 5 !important;
+}
+
+/* Linha 2: contentor da tríade — centralização dos 4 botões */
+.pure-toolbar-unified .triada-row {
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+}
+
+/* Manter os botões com largura automática, sem esticar */
+.pure-toolbar-unified .triada-row .btn-tool {
+    width: auto !important;
+    flex: 0 0 auto !important;
+}
+
+/* Base LED unificada */
+.pure-btn-led {
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+    padding: 0 8px;
+    background: rgba(15, 23, 42, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.18s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pure-btn-led:hover {
+    filter: brightness(1.35);
+    transform: translateY(-1px);
+}
+
+/* Variantes cromáticas */
+.led-blue   { border-bottom: 2px solid #00e5ff; box-shadow: 0 3px 8px -3px rgba(0,229,255,0.55); }
+.led-silver { border-bottom: 2px solid #94a3b8; }
+.led-cyan   { border-bottom: 2px solid #22d3ee; color: #22d3ee !important; box-shadow: 0 3px 8px -3px rgba(34,211,238,0.4); }
+.led-purple { border-bottom: 2px solid #a855f7; color: #c084fc !important; box-shadow: 0 3px 8px -3px rgba(168,85,247,0.4); }
+.led-pink   { border-bottom: 2px solid #ec4899; color: #f472b6 !important; box-shadow: 0 3px 8px -3px rgba(236,72,153,0.4); }
+.led-gold   { border-bottom: 2px solid #eab308; color: #facc15 !important; box-shadow: 0 3px 8px -3px rgba(234,179,8,0.4); }
+.led-orange {
+    border: 1px solid #f97316 !important;
+    background: rgba(249, 115, 22, 0.12) !important;
+    color: #f97316 !important;
+    box-shadow: 0 0 12px rgba(249,115,22,0.45), 0 0 3px rgba(249,115,22,0.7) !important;
+    font-weight: 800 !important;
+}
+
+/* Retrocompatibilidade com aliases anteriores */
+.led-magenta     { border-bottom: 2px solid #ec4899; color: #f472b6 !important; }
+.led-orange-master { border: 1px solid #f97316 !important; background: rgba(249,115,22,0.12) !important; color: #f97316 !important; font-weight: 800 !important; }
+
+/* ============================================================================ */
+/* CORREÇÃO 3: Dimensionamento robusto dos botões de exportação */
+/* ============================================================================ */
+
+.triada-row {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.pure-btn-led {
+    min-width: 160px !important;
+    height: 50px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 13px !important;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    transition: all 0.3s ease;
+}
+
+.pure-btn-led:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.pure-btn-led span {
+    font-size: 20px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.pure-btn-led small {
+    display: block;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════ */
+/* RETIFICAÇÃO CIRÚRGICA v13.5.6-R3: TRIADA NEON UI — Estilos Neon para Botões de Exportação */
+/* Cores Distintas + Legibilidade Máxima + Compatibilidade com Mode Profissional */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════ */
+
+.triada-row .pure-btn-led {
+    border: 1px solid currentColor !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    transition: all 0.3s ease !important;
+    background: rgba(15, 23, 42, 0.8) !important;
+    position: relative;
+}
+
+/* Text Shadow para legibilidade máxima sobre brilho neon */
+.triada-row .pure-btn-led span {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+    z-index: 2;
+    position: relative;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+/* BOTÃO 1: PDF REPORT — Neon Cyan (#00E5FF) */
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+#btnExpPDF {
+    color: #00E5FF !important;
+    border: 1px solid #00E5FF !important;
+    box-shadow: 0 0 5px #00E5FF, inset 0 0 2px #00E5FF !important;
+}
+
+#btnExpPDF:hover {
+    filter: brightness(1.3) !important;
+    box-shadow: 0 0 15px #00E5FF, inset 0 0 5px #00E5FF !important;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 3px rgba(0, 229, 255, 0.6) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+/* BOTÃO 2: JSON DATA — Neon Amber/Gold (#F59E0B) */
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+#btnExpJSON {
+    color: #F59E0B !important;
+    border: 1px solid #F59E0B !important;
+    box-shadow: 0 0 5px #F59E0B, inset 0 0 2px #F59E0B !important;
+}
+
+#btnExpJSON:hover {
+    filter: brightness(1.3) !important;
+    box-shadow: 0 0 15px #F59E0B, inset 0 0 5px #F59E0B !important;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 3px rgba(245, 158, 11, 0.6) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+/* BOTÃO 3: LEGAL PACKAGE — Neon Emerald (#10B981) */
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+#btnExpAdv {
+    color: #10B981 !important;
+    border: 1px solid #10B981 !important;
+    box-shadow: 0 0 5px #10B981, inset 0 0 2px #10B981 !important;
+}
+
+#btnExpAdv:hover {
+    filter: brightness(1.3) !important;
+    box-shadow: 0 0 15px #10B981, inset 0 0 5px #10B981 !important;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 3px rgba(16, 185, 129, 0.6) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+/* BOTÃO 4: ATF FORECAST — Neon Purple (#D946EF) */
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+#pure-atf-btn {
+    color: #D946EF !important;
+    border: 1px solid #D946EF !important;
+    box-shadow: 0 0 5px #D946EF, inset 0 0 2px #D946EF !important;
+}
+
+#pure-atf-btn:hover {
+    filter: brightness(1.3) !important;
+    box-shadow: 0 0 15px #D946EF, inset 0 0 5px #D946EF !important;
+    color: #ffffff !important;
+    text-shadow: 1px 1px 3px rgba(217, 70, 239, 0.6) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+/* EFEITO GERAL DE HOVER — Aplicável a todos os botões neon da triada */
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+.triada-row .pure-btn-led:hover {
+    filter: brightness(1.3) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 15px currentColor, inset 0 0 5px currentColor !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+/* ACESSIBILIDADE: Garantir legibilidade em modo dark/light */
+/* ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+.triada-row .pure-btn-led {
+    background: rgba(15, 23, 42, 0.9) !important;
+    backdrop-filter: blur(2px);
+}
+
+@media (prefers-color-scheme: light) {
+    .triada-row .pure-btn-led {
+        background: rgba(255, 255, 255, 0.9) !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════ */
+/* FIM RETIFICAÇÃO v13.5.6-R3 */
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════ */
+
+/* ============================================================
+   CORREÇÃO v13.5.6-R7: Isolar estilo dos botões de exportação
+   ============================================================ */
+/* A regra abaixo aplica-se APENAS aos 4 botões da tríade (linha 2) */
+.triada-row .pure-btn-led {
+    min-width: 160px !important;
+    height: 50px !important;
+    background-color: #0f172a !important;      /* fundo escuro */
+    color: #e2e8f0 !important;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 13px !important;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+/* Forçar os botões da toolbar (linha 1) a manterem o estilo original */
+.pure-toolbar-unified .pure-btn-led {
+    background: rgba(15, 23, 42, 0.92) !important;
+    color: #e2e8f0 !important;
+    border-bottom-width: 2px !important;
+    border-bottom-style: solid !important;
+}
+
+/* Garantir que as variantes LED (azul, prata) aparecem */
+.pure-toolbar-unified .led-blue { border-bottom-color: #00e5ff !important; box-shadow: 0 3px 8px -3px rgba(0,229,255,0.55) !important; }
+.pure-toolbar-unified .led-silver { border-bottom-color: #94a3b8 !important; }
+
+/* ============================================================================
+   RETIFICAÇÃO CIRÚRGICA v13.5.6-R8: NEXUS FORECAST PANEL
+   ============================================================================ */
+/* --- REGRA SUBSTITUÍDA (RETIFICAÇÃO v13.5.6-R11) --- */
+.nexus-forecast-panel {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 229, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 8px;
+}
+
+/* ============================================================================
+   NOTA DE VERIFICAÇÃO JAVASCRIPT (CUSTÓDIA E MODAIS)
+   ============================================================================
+   Proceda à revisão de qualquer função que crie elementos dinâmicos (ex: geração
+   de relatórios, modais, cadeia de custódia) e assegure que NÃO existe chamada a
+   `document.body.appendChild` duplicada ou fora do contexto esperado.
+   
+   Especificamente, verifique:
+     - Funções que abrem modais: devem reutilizar o mesmo elemento, não criar novos.
+     - Geração de QR code, gráficos ATF, exportações: devem remover elementos
+       anteriores antes de adicionar novos.
+     - Cadeia de custódia: não devem ser criados múltiplos contentores sobrepostos.
+   
+   Recomendação: sempre que precisar de anexar um elemento, use um contentor
+   específico (ex: `#dynamicContainer`), limpe o seu conteúdo com `innerHTML = ''`
+   antes de adicionar novos elementos. Evite `appendChild` directo no `body`.
+   ============================================================================ */
+/* ============================================================================
+   UNIFED-PROBATUM v13.5.6-R8-ELITE
+   PAINEL DO ADVOGADO: CONTRADITORIO DINAMICO
+   Glassmorphism Forense | Neon Cyan/Purple | FBI/INTERPOL palette
+   ============================================================================ */
+
+/* ── Painel principal ───────────────────────────────────────────────────── */
+#lawyerContradictoryPanel {
+    background: linear-gradient(135deg,
+        rgba(0, 61, 165, 0.08) 0%,
+        rgba(100, 0, 180, 0.06) 50%,
+        rgba(0, 13, 26, 0.95) 100%);
+    border: 1px solid rgba(0, 163, 224, 0.25);
+    border-left: 4px solid #6366f1;
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin: 18px 0;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        0 0 30px rgba(99, 102, 241, 0.12),
+        0 4px 24px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(0, 163, 224, 0.1);
+    position: relative;
+    overflow: visible;
+}
+
+#lawyerContradictoryPanel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00A3E0, #6366f1, #8b5cf6, #00A3E0);
+    background-size: 200% 100%;
+    animation: lawyerGradShift 4s linear infinite;
+    border-radius: 10px 10px 0 0;
+}
+
+@keyframes lawyerGradShift {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+}
+
+.lawyer-panel__title {
+    color: #00A3E0 !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    font-weight: 800 !important;
+}
+
+.lawyer-panel__sub {
+    color: #7B9BB8;
+    font-size: 0.67rem;
+    margin: 4px 0 16px;
+    letter-spacing: 0.04em;
+}
+
+/* ── Linha Merkle ────────────────────────────────────────────────────────── */
+.lawyer-merkle-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 163, 224, 0.05);
+    border: 1px solid rgba(0, 163, 224, 0.15);
+    border-radius: 5px;
+    padding: 8px 14px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.lawyer-merkle-label {
+    color: #7B9BB8;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.lawyer-merkle-value {
+    color: #00A3E0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    word-break: break-all;
+}
+
+/* ── Container dos 3 cards ───────────────────────────────────────────────── */
+.top3-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+/* ── Card individual (Glassmorphism Forense) ─────────────────────────────── */
+.top3-question-card {
+    background: rgba(10, 22, 40, 0.85);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-left: 4px solid #6366f1;
+    border-radius: 8px;
+    padding: 16px 18px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+}
+
+.top3-question-card:hover {
+    border-color: rgba(0, 163, 224, 0.5);
+    box-shadow: 0 0 16px rgba(0, 163, 224, 0.15);
+}
+
+.top3-card__rank {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #003DA5, #6366f1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #E8F4FD;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
+.top3-card__badge {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    border-radius: 3px;
+    padding: 2px 10px;
+    font-size: 0.64rem;
+    font-weight: 700;
+    color: #a5b4fc;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.top3-card__q-label {
+    color: #7B9BB8;
+    font-size: 0.64rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+/* ── Texto contenteditable — estado normal e focus (neon glow) ─────────── */
+.top3-card__q-text {
+    color: #E8F4FD;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    padding: 8px 12px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.25);
+    cursor: text;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    min-height: 48px;
+    word-break: break-word;
+}
+
+.top3-card__q-text:focus {
+    border-color: #00A3E0;
+    background: rgba(0, 163, 224, 0.06);
+    box-shadow:
+        0 0 0 2px rgba(0, 163, 224, 0.18),
+        0 0 20px rgba(0, 163, 224, 0.25),
+        inset 0 0 12px rgba(99, 102, 241, 0.06);
+    color: #ffffff;
+}
+
+.top3-card__q-text:focus::selection {
+    background: rgba(0, 163, 224, 0.3);
+}
+
+/* ── Meta-dados (norma, implicação, defesa) ──────────────────────────────── */
+.top3-card__meta {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 163, 224, 0.1);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+}
+
+.top3-meta-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.top3-meta-label {
+    flex: 0 0 auto;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7B9BB8;
+    padding-top: 2px;
+    min-width: 110px;
+}
+
+.top3-meta-value {
+    flex: 1 1 0;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.top3-meta-norma { color: #00A3E0; }
+.top3-meta-impl  { color: #F5A623; }
+.top3-meta-def   { color: #00C853; }
+
+/* ── Placeholder ─────────────────────────────────────────────────────────── */
+.top3-placeholder {
+    color: #7B9BB8;
+    font-size: 0.78rem;
+    text-align: center;
+    padding: 24px;
+    border: 1px dashed rgba(99, 102, 241, 0.25);
+    border-radius: 6px;
+    font-style: italic;
+}
+
+/* ── Botões de acção ─────────────────────────────────────────────────────── */
+.lawyer-panel__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+.lawyer-btn {
+    height: 40px;
+    padding: 0 18px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.lawyer-btn--regen {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: #6366f1;
+    color: #a5b4fc;
+}
+.lawyer-btn--regen:hover {
+    background: rgba(99, 102, 241, 0.22);
+    box-shadow: 0 0 14px rgba(99, 102, 241, 0.4);
+    color: #ffffff;
+}
+
+.lawyer-btn--accept {
+    background: rgba(0, 200, 83, 0.1);
+    border-color: #00C853;
+    color: #00C853;
+}
+.lawyer-btn--accept:hover {
+    background: rgba(0, 200, 83, 0.2);
+    box-shadow: 0 0 14px rgba(0, 200, 83, 0.35);
+    color: #69F0AE;
+}
+
+.lawyer-btn--arch {
+    background: rgba(0, 163, 224, 0.08);
+    border-color: rgba(0, 163, 224, 0.4);
+    color: #00A3E0;
+}
+.lawyer-btn--arch:hover {
+    background: rgba(0, 163, 224, 0.18);
+    box-shadow: 0 0 14px rgba(0, 163, 224, 0.3);
+}
+
+/* ── Rodapé legal ────────────────────────────────────────────────────────── */
+.lawyer-panel__footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 163, 224, 0.08);
+    font-size: 0.63rem;
+    color: #4A6785;
+    letter-spacing: 0.04em;
+}
+
+.lawyer-panel__sep {
+    color: rgba(0, 163, 224, 0.3);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .top3-meta-label { min-width: 80px; }
+    .lawyer-panel__actions { flex-direction: column; }
+    .lawyer-btn { width: 100%; justify-content: center; }
+}
+
+
+/* ============================================================================
+   ✅ RETIFICAÇÃO CIRÚRGICA v13.5.6-R11 — CONSOLIDAÇÃO FINAL
+   TIPOGRAFIA BOTÕES + ALINHAMENTO SECÇÃO II + EXPURGO ATF
+   Escopo  : #btn-export-lawyer | #btn-export-analyst | .pure-btn-led[id*="export"]
+             .discrepancy-section | .smoking-gun-card | .discrepancy-card
+             .atf-section-header | .atf-card-highlight | .atf-container
+   Nota    : Substitui integralmente R9 + R10. Zero alteração a variáveis
+             globais, estrutura Merkle ou blocos anteriores à linha 1325.
+   ============================================================================ */
+
+/* ── 1. ESMAGAMENTO DE TIPOGRAFIA NOS BOTÕES DE EXPORTAÇÃO ─────────────────── */
+/* Selector universal descendente (*) anula qualquer herança de font-size       */
+/* proveniente de regras .pure-btn-led base (linhas 762–835 deste ficheiro).    */
+#btn-export-lawyer,
+#btn-export-lawyer *,
+#btn-export-analyst,
+#btn-export-analyst *,
+.pure-btn-led[id*="export"],
+.pure-btn-led[id*="export"] * {
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    line-height: 1.2 !important;
+}
+
+/* ── 2. CONTENTOR DO ÍCONE (Balança / Lupa) — dimensão compacta ─────────── */
+#btn-export-lawyer > div,
+#btn-export-analyst > div,
+.pure-btn-led .pure-btn-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin: 0 auto 4px auto !important;
+    border: 1px solid rgba(0, 229, 255, 0.3) !important;
+    border-radius: 4px !important;
+    background: rgba(2, 132, 199, 0.1) !important;
+    font-size: 0.95rem !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+/* Efeito glow ao passar o ponteiro — preservado do R9 */
+#btn-export-lawyer:hover > div,
+#btn-export-analyst:hover > div {
+    border: 1px solid rgba(0, 229, 255, 1) !important;
+    background: rgba(0, 229, 255, 0.2) !important;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.4) !important;
+}
+
+/* ── 3. REESTRUTURAÇÃO FLEXBOX DA SECÇÃO II (PROVA RAINHA / SMOKING GUNS) ── */
+/* display:flex + flex-direction:column + align-items:flex-start corrije        */
+/* qualquer descentralização provocada por fuga de regras flex de âmbito        */
+/* superior. width:100% + box-sizing:border-box garante contenção de layout.    */
+#pureDashboard .discrepancy-section,
+#pureDashboard [data-section="discrepancies"],
+.smoking-gun-card,
+.discrepancy-card,
+.evidencia-materialidade {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* UNIFED-STYLE-RET-09: Substituição de !important por classe de estado .is-visible
+   para controlo de visibilidade via JavaScript, sem conflitos de especificidade.
+   A regra base .bigdata-alert (style.css) já tem display: none.
+   Quando o elemento tiver a classe .is-visible, exibe-se. */
+.bigdata-alert.is-visible,
+#smoking-gun-1.is-visible,
+#smoking-gun-2.is-visible,
+.smoking-gun-card.is-visible,
+.evidencia-materialidade.is-visible {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 20;
+}
+
+/* Removidos todos os !important que forçavam display:flex nas smoking guns
+   (blocos R3 e R4 originais foram suprimidos). A classe .is-visible agora
+   governa a apresentação. */
+
+/* Blindagem de descendentes — anula herança de text-align e align-self         */
+.smoking-gun-card *,
+.discrepancy-card *,
+.evidencia-materialidade * {
+    text-align: left !important;
+    align-self: flex-start !important;
+}
+
+
+/* ── 4. EXPURGO ABSOLUTO DO LILÁS EM ESTADOS INTERACTIVOS (ATF) ─────────── */
+.atf-section-header:active,
+.atf-section-header:focus,
+.atf-section-header.active,
+.atf-section-header.open,
+.atf-card-highlight:active,
+.atf-card-highlight:focus,
+.atf-card-highlight.selected,
+[data-section="atf"]:active,
+.atf-container:active {
+    background: rgba(15, 23, 42, 0.98) !important;
+    background-image: none !important;
+    border-left: 4px solid #00E5FF !important;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2) !important;
+    color: #f1f5f9 !important;
+}
+
+/* Neutralização de cor lilás em descendentes ATF após interação */
+.atf-section-header *,
+.atf-card-highlight *,
+#atfPersistenceScoreChart *:active {
+    color: #f1f5f9 !important;
+    border-color: #00E5FF !important;
+}
+
+/* ============================================================================
+   FIM RETIFICAÇÃO CIRÚRGICA v13.5.6-R11
+   ============================================================================ */
+
+/* ============================================================================
+   UNIFED-STYLE-RET-09: CLASSE AUXILIAR PARA SINALIZAÇÃO DE DISCREPÂNCIA
+   Sem !important, para ser usada em conjunto com .is-visible ou isoladamente.
+   ============================================================================ */
+.has-discrepancy {
+    border-left: 4px solid var(--pure-warn, #ef4444);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+/* ── RETIFICAÇÃO: Modal ATF Dark Mode Gradient & Legibilidade ── */
+#atfModal .modal-content {
+    background: linear-gradient(135deg, #020617 0%, #0f172a 100%) !important;
+    border: 1px solid rgba(0, 229, 255, 0.3) !important;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 229, 255, 0.05) !important;
+}
+#atfModal .modal-header {
+    background: rgba(0, 0, 0, 0.6) !important;
+    border-bottom: 1px solid rgba(0, 229, 255, 0.2) !important;
+}
+#atfModal .pure-atf-label,
+#atfModal .pure-atf-sub,
+#atfModal .pure-atf-note {
+    color: #94a3b8 !important;
+    font-weight: 600 !important;
+}
+#atfModal .pure-atf-meses-val {
+    color: #f1f5f9 !important;
+}
