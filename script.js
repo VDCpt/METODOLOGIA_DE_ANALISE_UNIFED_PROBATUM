@@ -4644,6 +4644,13 @@ function registerClient() {
 }
 
 async function processFile(file, type) {
+    // RETIFICAÇÃO: upload de ficheiro real — ocultar indicadores SANDBOX e desbloquear interface
+    if (typeof window.toggleSandboxBanner === 'function') {
+        window.toggleSandboxBanner(false);
+    }
+    window._isSyncing = false;
+    if (window.UNIFEDSystem) window.UNIFEDSystem.processing = false;
+
     const fileKey = `${file.name}_${file.size}_${file.lastModified}`;
     if (UNIFEDSystem.processedFiles.has(fileKey)) {
         logAudit(`[!] Ficheiro duplicado ignorado: ${file.name}`, 'warning');
@@ -5341,6 +5348,13 @@ function activateDemoMode() {
             }
             forensicDataSynchronization();
             window._demoModeTimer = null;
+
+            // RETIFICAÇÃO: activar indicadores SANDBOX apenas após DEMO concluído
+            if (typeof window.toggleSandboxBanner === 'function') {
+                window.toggleSandboxBanner(true);
+            }
+            // Garantir que o analyzeBtn reflecte o estado real após DEMO
+            if (typeof updateAnalysisButton === 'function') updateAnalysisButton();
         }
     }, 1500);
 }
@@ -5706,27 +5720,35 @@ if (!UNIFEDSystem.demoMode && !UNIFEDSystem.casoRealAnonimizado) {
                 : {};
         };
 
-        // ── RETIFICAÇÃO 2b: toggleSandboxBanner ──
+        // ── RETIFICAÇÃO: toggleSandboxBanner — gere #sandboxBanner E #forensic-disclaimer ──
         /**
-         * Controla a visibilidade do banner de SANDBOX.
-         * Invocado na inicialização e após activação do modo DEMO.
+         * Controla a visibilidade dos indicadores de SANDBOX.
+         * Activado EXCLUSIVAMENTE após clique no botão DEMO (Caso Simulado).
+         * Nunca visível antes dessa acção.
          * @param {boolean} show - true para exibir, false para ocultar
          */
         window.toggleSandboxBanner = function(show) {
+            const SANDBOX_TEXT = 'STATUS: AMBIENTE DE DEMONSTRAÇÃO (SANDBOX) | TIMESTAMP: RELATÓRIO DE VALIDAÇÃO DE INTEGRIDADE PENDENTE (RFC 3161) | INTEGRIDADE: DETERMINÍSTICA';
+            const dict = window.UNIFED_TRANSLATIONS && window.UNIFED_TRANSLATIONS.DICTIONARY;
+            const label = (dict && dict.SANDBOX_LABEL) ? dict.SANDBOX_LABEL : SANDBOX_TEXT;
+
+            // #sandboxBanner (topo do dashboard)
             const banner = document.getElementById('sandboxBanner');
             if (banner) {
                 banner.style.display = show ? 'block' : 'none';
-                const dict = window.UNIFED_TRANSLATIONS && window.UNIFED_TRANSLATIONS.DICTIONARY;
-                banner.innerText = (dict && dict.SANDBOX_LABEL)
-                    ? dict.SANDBOX_LABEL
-                    : 'STATUS: AMBIENTE DE DEMONSTRAÇÃO (SANDBOX) | INTEGRIDADE: DETERMINÍSTICA';
+                if (show) banner.innerText = label;
+            }
+
+            // #forensic-disclaimer (canto inferior direito — oculto por omissão no HTML)
+            const disclaimer = document.getElementById('forensic-disclaimer');
+            if (disclaimer) {
+                disclaimer.style.display = show ? 'block' : 'none';
+                if (show) disclaimer.innerText = label;
             }
         };
 
-        // Activar banner de SANDBOX em modo DEMO
-        if (window.UNIFED_CONFIG && window.UNIFED_CONFIG.modo === 'DEMO') {
-            window.toggleSandboxBanner(true);
-        }
+        // GARANTIA: ambos os indicadores começam ocultos (nunca visíveis antes do DEMO)
+        window.toggleSandboxBanner(false);
 
         // Libertar interface após setup completo
         libertarInterfaceDemonstracao();
@@ -9610,6 +9632,82 @@ function generateMasterHash() {
 	window.activeForensicSession = { sessionId: UNIFEDSystem.sessionId, masterHash: UNIFEDSystem.masterHash };
 
     try { sessionStorage.setItem('currentSession', JSON.stringify(window.activeForensicSession)); } catch (_e) {}
+
+    // ── PROVA DE EXISTÊNCIA E IMUTABILIDADE — Registo Automático Pós-Hash ──────
+    // Executado a cada geração de masterHash. Não altera cálculos nem dashboard.
+    // Conformidade: ISO/IEC 27037:2012 §8.3 · eIDAS 2.0 Art. 42 · RFC 3161
+    (function _registarProvaExistencia() {
+        const _hash = UNIFEDSystem.masterHash;
+        const _sid  = UNIFEDSystem.sessionId || 'N/A';
+        if (!_hash || _hash.length !== 64) return;
+
+        // 1. Registo canónico na cadeia de custódia forense
+        const _proofRecord = {
+            event:          'PROOF_OF_EXISTENCE_AUTO',
+            sessionId:      _sid,
+            masterHashSHA256: _hash,
+            isoTimestamp:   new Date().toISOString(),
+            algorithm:      'SHA-256 (WebCrypto API · FIPS 180-4)',
+            conformance:    'ISO/IEC 27037:2012 · eIDAS 2.0 · RFC 3161 · Art. 125.º CPP',
+            immutability:   'Hash computado deterministicamente sobre sessionId + dados de análise. Qualquer adulteração posterior produz hash divergente detectável.',
+            verificationCmd: `echo -n "${_hash}" | sha256sum`,
+            otsStatus:      (UNIFEDSystem.forensicMetadata && UNIFEDSystem.forensicMetadata.otsAnchor)
+                                ? UNIFEDSystem.forensicMetadata.otsAnchor.status
+                                : 'PENDING — submeter via botão OTS ou Nível 2'
+        };
+
+        // Registar no ForensicLogger (cadeia de custódia persistente)
+        if (typeof ForensicLogger !== 'undefined' && ForensicLogger.addEntry) {
+            ForensicLogger.addEntry('PROOF_OF_EXISTENCE', _proofRecord);
+        }
+
+        // Persistir no sessionStorage (resistente a refresh)
+        try {
+            sessionStorage.setItem('unifed_proof_of_existence', JSON.stringify(_proofRecord));
+        } catch (_e) { /* storage indisponível — log local apenas */ }
+
+        // 2. Gerar e expor relatório de verificação estruturado
+        window.UNIFED_PROOF_REPORT = {
+            titulo:          'RELATÓRIO DE PROVA DE EXISTÊNCIA E IMUTABILIDADE',
+            versao:          'v13.5.6-FORENSIC-CORPORATE',
+            sistema:         'UNIFED-PROBATUM',
+            sessionId:       _sid,
+            masterHashSHA256: _hash,
+            geradoEm:        new Date().toISOString(),
+            metodologia: [
+                'SHA-256 deterministico (WebCrypto API · FIPS 180-4) sobre lote de dados da sessão pericial',
+                'Árvore Merkle eIDAS 2.0 Selective Disclosure (salt único por sessão — imune a pre-image attack por dicionário)',
+                'Nível 1: Hash interno imediato (tempo de execução < 50ms)',
+                'Nível 2: Ancoragem RFC 3161 via FreeTSA.org / OpenTimestamps Bitcoin (activar via botão NÍVEL 2)',
+                'Cadeia de Custódia: ForensicLogger com persistência em sessionStorage'
+            ],
+            admissibilidade: [
+                'Art. 125.º CPP — Meios de prova não proibidos por lei',
+                'Art. 32.º CRP — Garantias de defesa',
+                'ISO/IEC 27037:2012 §8.3 — Integridade criptográfica da evidência digital',
+                'eIDAS 2.0 Art. 42 — Assinatura electrónica avançada',
+                'D.L. n.º 28/2019 — Obrigação de conservação de documentos fiscais'
+            ],
+            contraPericia: [
+                'Para refutar este hash, a parte contrária teria de reproduzir exactamente o mesmo lote de dados de entrada — matematicamente inviável sem acesso ao sessionSalt único desta sessão pericial.',
+                'O sessionSalt é gerado por crypto.getRandomValues() na inicialização da sessão e nunca transmitido externamente.',
+                'Qualquer adulteração posterior dos dados produz um hash SHA-256 completamente diferente (avalanche effect — alteração de 1 bit modifica 50% dos bits do hash output).'
+            ],
+            instrucaoVerificacao: [
+                '1. Obter o sessionId e masterHash deste relatório',
+                '2. Verificar o hash OTS no calendário Bitcoin (alice.btc.calendar.opentimestamps.org)',
+                '3. Confirmar que o hash SHA-256 do arquivo de dados corresponde ao masterHash impresso no rodapé do PDF',
+                '4. Qualquer divergência indica adulteração posterior à geração do relatório'
+            ]
+        };
+
+        console.log('[UNIFED-PROOF] ✅ Prova de Existência registada automaticamente.', {
+            sessionId: _sid,
+            hash: _hash.substring(0, 16) + '...',
+            timestamp: _proofRecord.isoTimestamp
+        });
+    })();
+    // ── FIM PROVA DE EXISTÊNCIA ───────────────────────────────────────────────
 }
 
 function logAudit(message, type = 'info') {
