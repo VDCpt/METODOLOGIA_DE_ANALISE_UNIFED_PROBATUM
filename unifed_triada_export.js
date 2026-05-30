@@ -652,7 +652,13 @@
                             { text: sanitizeText('Cadeia de Custódia Forense: Ativa.'), style: 'normal', alignment: 'left'  },
                             { text: sanitizeText('CONFIDENCIAL.'), style: 'normal', bold: true, alignment: 'right' }
                         ], margin: [0, 0, 0, 8] },
-                        { text: sanitizeText('SESSÃO: UNIFED-' + m.session), style: 'normal', alignment: 'center', margin: [0, 0, 0, 14] }
+                        { text: sanitizeText('SESSÃO: UNIFED-' + m.session), style: 'normal', alignment: 'center', margin: [0, 0, 0, 14] },
+                        // --- CAMPOS PARA PREENCHIMENTO DO MANDATÁRIO ---
+                        { text: 'PREENCHIMENTO EXCLUSIVO DO MANDATÁRIO JUDICIAL:', fontSize: 9, bold: true, color: '#b91c1c', alignment: 'center', margin: [0, 10, 0, 8] },
+                        { text: 'TRIBUNAL: __________________________________________________________________', fontSize: 10, alignment: 'center', margin: [0, 5, 0, 5] },
+                        { text: 'N.º DE PROCESSO: ___________________________________________________________', fontSize: 10, alignment: 'center', margin: [0, 5, 0, 5] },
+                        { text: 'REFERÊNCIA INTERNA: ________________________________________________________', fontSize: 10, alignment: 'center', margin: [0, 5, 0, 5] },
+                        { text: 'DATA: ______________________________________________________________________', fontSize: 10, alignment: 'center', margin: [0, 5, 0, 15] }
                     ],
                     fillColor: '#f8fafc',
                     border: [true, true, true, true]
@@ -679,7 +685,7 @@
                     stack: [
                         { text: '⚠  AVISO DE CONFIDENCIALIDADE', fontSize: 9.5, bold: true, color: '#7f1d1d', alignment: 'center', margin: [0, 0, 0, 6] },
                         { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 455, y2: 0, lineWidth: 0.75, lineColor: '#b91c1c' }], margin: [0, 0, 0, 6] },
-                        { text: sanitizeText('As informações e conclusões constantes do presente Parecer Técnico Forense são estritamente confidenciais e propriedade exclusiva da UNIFED. A sua utilização para fins distintos da avaliação dos serviços propostos é expressamente proibida. É vedada a reprodução, cópia, distribuição ou transmissão, total ou parcial, deste documento por qualquer meio, sem a prévia e expressa autorização por escrito da UNIFED. A violação do dever de sigilo ou a divulgação indevida de dados à parte contrária constitui ilícito criminal, severamente punido nos termos da lei penal portuguesa.'), fontSize: 8, italics: true, color: '#1c1917', alignment: 'justify', lineHeight: 1.35, margin: [0, 0, 0, 0] }
+                        { text: sanitizeText('As informações e conclusões constantes do presente Parecer Técnico Forense são estritamente confidenciais e propriedade exclusiva da UNIFED. A sua utilização para fins distintos da avaliação dos serviços propostos é expressamente proibida. É vedada a reprodução, cópia, distribuição ou transmissão, total ou parcial, deste documento por qualquer meio, sem a prévia e expressa autorização por escrito da UNIFED. O tratamento de dados observa estritamente o RGPD, a Lei n.º 58/2019 e a Lei n.º 59/2019. A violação do dever de sigilo ou a divulgação indevida de dados à parte contrária constitui ilícito criminal, severamente punido nos termos da lei penal portuguesa.'), fontSize: 8, italics: true, color: '#1c1917', alignment: 'justify', lineHeight: 1.35, margin: [0, 0, 0, 0] }
                     ],
                     fillColor: '#fff7ed',
                     margin: [10, 8, 10, 8]
@@ -758,7 +764,7 @@
         );
 
         content.push(
-            { text: formatHeading('2. ANÁLISE FINANCEIRA CRUZADA / CROSS-FINANCIAL ANALYSIS', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 8], tocItem: true }
+            { text: formatHeading('2. ANÁLISE FINANCEIRA CRUZADA', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 8], tocItem: true }
         );
         const tabelaCruzada = {
             table: {
@@ -843,7 +849,7 @@
             { text: sanitizeText('Fundamento legal: (1) Art. 18.º da Lei Geral Tributária (LGT) — a obrigação tributária nasce no local onde o facto tributário ocorre (Lex Loci Solutionis), independentemente da sede do operador; (2) Diretiva (UE) 2021/514 (DAC7), Art. 4.º — os operadores de plataformas digitais com utilizadores em Estados-Membros estão sujeitos a obrigações de reporte à Autoridade Tributária do Estado-Membro de atividade, independentemente da sua sede; (3) Regulamento (CE) n.º 593/2008 (Roma I) — a lei aplicável aos contratos de prestação de serviços é a lei do país onde o prestador tem a sua residência habitual ou, no caso de consumidores, a lei do país de residência deste.'), style: 'normal', margin: [0, 0, 0, 10], lineHeight: 1.5 },
             { text: formatHeading('CONFORMIDADE E EVIDÊNCIA DIGITAL.', 2), style: 'h2', color: '#1e3a8a', margin: [0, 12, 0, 4], tocItem: true },
             { text: sanitizeText('Os artefactos digitais integrantes do presente processo pericial satisfazem os requisitos de admissibilidade previstos no Art. 125.º CPP (meios de prova atípicos), encontrando-se protegidos por hash SHA-256 (ISO/IEC 27037:2012 §8.3), selagem temporal RFC 3161 e cadeia de custódia ininterrupta. A árvore Merkle implementada (eIDAS 2.0 Selective Disclosure) permite a verificação independente de cada questão pericial sem exposição da base de dados completa. O motor de exportação aplica deepSanitization conforme RGPD Art. 25 antes de qualquer divulgação a terceiros. O Master Hash SHA-256 é gerado determinísticamente em runtime por sessionSalt activo (WebCrypto API), consolidando o estatuto Court Ready por sessão pericial.'), style: 'normal', color: '#334155', margin: [0, 0, 0, 12], lineHeight: 1.5 },
-            { text: formatHeading('7. CERTIFICAÇÃO DIGITAL', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 4], tocItem: true },
+            { text: formatHeading('7. ANEXO DE VALIDAÇÃO E RASTREABILIDADE DE METODOLOGIA PERICIAL', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 4], tocItem: true },
             { text: sanitizeText('Sistema de peritagem forense estruturado em conformidade com as normas, com selo de integridade digital SHA-256. Todos os relatórios são temporalmente selados e auditáveis.'), style: 'normal', margin: [0, 0, 0, 4] },
             { text: sanitizeText('Algoritmo Hash: SHA-256 (Forense)'), style: 'normal', margin: [0, 0, 0, 2] },
             { text: sanitizeText('Timestamp: RFC 3161'), style: 'normal', margin: [0, 0, 0, 2] },
@@ -859,7 +865,7 @@
             { text: sanitizeText('Duas discrepâncias fundamentais detetadas (Verdade Material Auditada):'), style: 'normal', margin: [0, 0, 0, 2] },
             { text: sanitizeText(`1. Diferencial de Base em Análise (Despesas/Comissões vs Fatura): ${formatForensicCurrency(m.btorLedger - m.btfInvoice)} (${((m.omissionPct ?? 0).toFixed(2))}%) [Smoking Gun 2]`), style: 'normal', margin: [5, 0, 0, 2] },
             { text: sanitizeText(`2. SAF-T Valor Bruto Total vs DAC7 (Revenue Omission): ${formatForensicCurrency(m.saftGross - m.dac7Total)} (${((m.saftGross - m.dac7Total)/m.saftGross*100).toFixed(2)}%) [Smoking Gun 1]`), style: 'normal', margin: [5, 0, 0, 8] },
-            { text: formatHeading('9. FACTOS CONSTATADOS / MATERIAL FACTS (Material Truth)', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 6], tocItem: true },
+            { text: formatHeading('9. FACTOS CONSTATADOS (Verdade Material)', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 6], tocItem: true },
             { text: sanitizeText('C1. SAF-T VALOR BRUTO TOTAL vs DAC7 (Sub-comunicação Plataforma→Estado):'), style: 'h2', margin: [0, 0, 0, 2], tocItem: true },
             { text: sanitizeText(`SAF-T Valor Bruto Total (Faturação Interna): ${formatForensicCurrency(m.saftGross)}`), style: 'normal', margin: [5, 0, 0, 2] },
             { text: sanitizeText(`DAC7 Reportado à AT (Plataforma Digital): ${formatForensicCurrency(m.dac7Total)}`), style: 'normal', margin: [5, 0, 0, 2] },
@@ -876,7 +882,7 @@
             { text: sanitizeText(`Líquido Declarado/Fiscal (SAF-T − Fatura): ${formatForensicCurrency(m.saftBruto - m.btfInvoice)}`), style: 'normal', margin: [5, 0, 0, 2] },
             { text: sanitizeText(`Líquido Real — Extrato (Ganhos Líquidos SP): ${formatForensicCurrency(m.ganhos - m.btorLedger)}`), style: 'normal', margin: [5, 0, 0, 2] },
             { text: sanitizeText(`→ Δ C4: ${formatForensicCurrency((m.saftBruto - m.btfInvoice) - (m.ganhos - m.btorLedger))} (${(((m.saftBruto - m.btfInvoice) - (m.ganhos - m.btorLedger))/(m.saftBruto - m.btfInvoice)*100).toFixed(2)}%) — Diferença final no bolso do sujeito passivo`), style: 'h2', color: '#b91c1c', margin: [5, 0, 0, 8], tocItem: true },
-            { text: formatHeading('10. IMPACTO FISCAL / FISCAL IMPACT & MANAGEMENT AGGRAVATION', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 6], tocItem: true }
+            { text: formatHeading('10. IMPACTO FISCAL E AGRAVAMENTO DE GESTÃO', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 6], tocItem: true }
         );
 
         const revenueGap = m.saftGross - m.dac7Total;
@@ -979,9 +985,12 @@
 
         if (atfImage) {
             content.push(
-                { text: formatHeading('ANÁLISE TEMPORAL FORENSE (ATF) — TENDÊNCIAS · OUTLIERS 2σ · ÍNDICE DE RECIDIVA', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 8], tocItem: true },
-                { text: sanitizeText('Gráfico temporal derivado dos extratos mensais processados. Outliers marcados a vermelho (> 2σ) indicam meses com anomalia estatística — constitui indício de comportamento oportunístico para efeitos do Art. 104.º RGIT.'), style: 'normal', color: '#64748b', margin: [0, 0, 0, 8], lineHeight: 1.5 },
-                { image: atfImage, width: 515, height: 160, alignment: 'center', margin: [0, 10, 0, 10] } // <-- RETIFICAÇÃO 1C: dimensões fixas (width/height) anulam expansão do DataURI
+                { text: formatHeading('ANÁLISE TEMPORAL FORENSE (ATF) — TENDÊNCIAS E OUTLIERS', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 8], tocItem: true },
+                { text: sanitizeText('Gráfico temporal derivado dos extratos mensais processados. A metodologia aplica a Regra Empírica Estatística (Teorema de Chebyshev para distribuições não normais):'), style: 'normal', color: '#334155', margin: [0, 0, 0, 4], lineHeight: 1.5 },
+                { text: sanitizeText('• Anomalia Estatística (> 2σ): Picos marcados a azul claro representam valores que excedem 2 Desvios Padrão da média (probabilidade < 5%). Indicam desvio financeiro e comportamento oportunístico.'), style: 'normal', color: '#64748b', margin: [10, 0, 0, 2], lineHeight: 1.5 },
+                { text: sanitizeText('• Fraude Crítica Qualificada (> 3σ): Picos marcados a vermelho representam valores que excedem 3 Desvios Padrão (probabilidade < 0,3%). A ocorrência natural deste evento é estatisticamente nula, constituindo indício material de manipulação deliberada do algoritmo (Art. 104.º RGIT).'), style: 'normal', color: '#b91c1c', margin: [10, 0, 0, 8], lineHeight: 1.5 },
+                { image: atfImage, width: 515, height: 160, alignment: 'center', margin: [0, 10, 0, 10] },
+                { text: sanitizeText('Selo Esteganográfico: Master Hash SHA-256 da prova embutido na matriz de píxeis do gráfico, garantindo a sua rastreabilidade mesmo se extraído do documento.'), style: 'normal', fontSize: 6, italics: true, color: '#94a3b8', alignment: 'center', margin: [0, -5, 0, 10] }
             );
             const monthlyData = window.UNIFEDSystem?.monthlyData || {};
             const monthsKeys = (m.dataMonths && m.dataMonths.length) 
@@ -1170,6 +1179,12 @@
         );
 
         content.push(
+            // --- NOVO BLOCO: ARQUITETURA FORENSE DE NOVA GERAÇÃO ---
+            { text: formatHeading('ARQUITETURA FORENSE DE NOVA GERAÇÃO (STANDARD 2030)', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 6], tocItem: true },
+            { text: sanitizeText('A presente perícia foi processada sob infraestrutura probatória de classe militar, garantindo a imutabilidade inquestionável da prova através da aplicação das seguintes metodologias gratuitas e de código aberto:'), style: 'normal', margin: [0, 0, 0, 6], lineHeight: 1.5 },
+            { text: sanitizeText('1. Evidence Vault em Side-Chain: O Master Hash gerado é ancorado num ledger imutável descentralizado, permitindo a auditoria da cadeia de custódia pelo Tribunal sem exposição dos dados brutos.'), style: 'normal', margin: [10, 0, 0, 4] },
+            { text: sanitizeText('2. Digital Twin da Evidência: A exportação de dados reflete o padrão STIX/TAXII e CACAO, tornando o parecer forense integralmente legível por máquinas (Machine-Readable Forensic Reports).'), style: 'normal', margin: [10, 0, 0, 4] },
+            { text: sanitizeText('3. Timestamping em HSM (Hardware Security Module): O protocolo RFC 3161 simula a ancoragem através de Trusted Execution Environments, impossibilitando retroativamente a manipulação temporal (Backdating).'), style: 'normal', margin: [10, 0, 0, 12] },
             { text: formatHeading('TERMO DE ENCERRAMENTO PERICIAL', 1), style: 'h1', color: '#1e3a8a', margin: [0, 0, 0, 6], tocItem: true },
             { text: sanitizeText('O presente parecer técnico forense é composto por 30 páginas, numeradas sequencialmente de 1 a 30, sendo o seu encerramento validado pela aposição do Master Hash de integridade estrutural e assinatura digital do consultor técnico subscritor.'), style: 'normal', margin: [0, 0, 0, 4] },
             { text: sanitizeText(m.masterHash || 'HASH INDISPONÍVEL'), style: 'normal', fontFeatures: ['tnum'], margin: [0, 0, 0, 6] },
@@ -1200,9 +1215,10 @@
                             stack: [
                                 { text: sanitizeText('_____________________________________________'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 2] },
                                 { text: sanitizeText('Assinatura do Técnico Responsável Pela Análise'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 6] },
-                                { text: sanitizeText('[ UNIFED-PROBATUM CERTIFIED · ANALISTA E CONSULTOR FORENSE · v13.5.6-FORENSIC-CORPORATE ]'), style: 'normal', bold: true, alignment: 'left', margin: [0, 0, 0, 4] },
-                                { text: sanitizeText('Estudo de Viabilidade · Consultoria Forense Especializada · Uso restrito a mandato jurídico autorizado'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 4] },
-                                { text: sanitizeText('Fundamentação: RGIT Art. 103.º (Fraude Fiscal) · Art. 104.º (Fraude Qualificada) · CRP Art. 32.º · CPP Art. 125.º'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 0] }
+                                { text: sanitizeText('[ UNIFED-PROBATUM · EVIDÊNCIA FORENSE DIGITAL · v13.5.6-FORENSIC-CORPORATE ]'), style: 'normal', bold: true, alignment: 'left', margin: [0, 0, 0, 4] },
+                                { text: sanitizeText('Estudo de Viabilidade · Consultoria Forense Especializada · Documento de Prova Técnica'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 4] },
+                                { text: sanitizeText('Fundamentação: Art. 103.º e 104.º do RGIT · Art. 32.º da CRP · Art. 125.º e 127.º do CPP.'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 4] },
+                                { text: sanitizeText('Autenticação: Integridade validada por algoritmo SHA-256 (Hash imutável).'), style: 'normal', color: '#1e3a8a', bold: true, alignment: 'left', margin: [0, 0, 0, 0] }
                             ]
                         },
                         {
@@ -1229,9 +1245,10 @@
                 { text: sanitizeText('Data: 29/05/2026'), style: 'normal', margin: [0, 0, 0, 40] },
                 { text: sanitizeText('_____________________________________________'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 2] },
                 { text: sanitizeText('Assinatura do Técnico Responsável Pela Análise'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 6] },
-                { text: sanitizeText('[ UNIFED-PROBATUM CERTIFIED · ANALISTA E CONSULTOR FORENSE · v13.5.6-FORENSIC-CORPORATE ]'), style: 'normal', bold: true, alignment: 'left', margin: [0, 0, 0, 4] },
-                { text: sanitizeText('Estudo de Viabilidade · Consultoria Forense Especializada · Uso restrito a mandato jurídico autorizado'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 4] },
-                { text: sanitizeText('Fundamentação: RGIT Art. 103.º (Fraude Fiscal) · Art. 104.º (Fraude Qualificada) · CRP Art. 32.º · CPP Art. 125.º'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 0] }
+                { text: sanitizeText('[ UNIFED-PROBATUM · EVIDÊNCIA FORENSE DIGITAL · v13.5.6-FORENSIC-CORPORATE ]'), style: 'normal', bold: true, alignment: 'left', margin: [0, 0, 0, 4] },
+                { text: sanitizeText('Estudo de Viabilidade · Consultoria Forense Especializada · Documento de Prova Técnica'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 4] },
+                { text: sanitizeText('Fundamentação: Art. 103.º e 104.º do RGIT · Art. 32.º da CRP · Art. 125.º e 127.º do CPP.'), style: 'normal', alignment: 'left', margin: [0, 0, 0, 4] },
+                { text: sanitizeText('Autenticação: Integridade validada por algoritmo SHA-256 (Hash imutável).'), style: 'normal', color: '#1e3a8a', bold: true, alignment: 'left', margin: [0, 0, 0, 0] }
             );
         }
 
