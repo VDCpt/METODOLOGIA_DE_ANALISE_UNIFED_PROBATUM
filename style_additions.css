@@ -1501,13 +1501,19 @@
     width: 100% !important;
 }
 
-/* ── RETIFICAÇÃO: Botão "Encerrar Sessão Pericial" ── */
+/* ── RETIFICAÇÃO: Botão "Encerrar Sessão Pericial" — Alta Visibilidade ── */
 #closeMethodologyBtn {
-    color: #ffffff !important; /* Lettering a branco para contraste absoluto */
-    text-shadow: 0 0 4px rgba(239, 68, 68, 0.8) !important;
-    font-weight: 800 !important;
+    background-color: #0f172a !important;
+    border: 1px solid #ef4444 !important;
+    color: #ffffff !important;
+    padding: 12px 24px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    transition: all 0.3s ease !important;
 }
 #closeMethodologyBtn:hover {
-    color: #fca5a5 !important;
-    background: rgba(239, 68, 68, 0.25) !important;
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5) !important;
 }

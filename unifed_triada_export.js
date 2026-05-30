@@ -1677,18 +1677,26 @@
         ]);
 
         const docDefinition = {
-            pageMargins: [40, 60, 40, 110], // <-- RETIFICAÇÃO 2: margem inferior 85→110 — clearance suficiente para rodapé
-            content: construirConteudoDinamicoAnalista(m, sankeyImg, atfImg, qrCodeImg),
+            pageSize: 'A4',
+            pageMargins: [40, 80, 40, 100], // <-- RETIFICAÇÃO 1: topo 60→80 acomoda header; base 110→100 equilibrado com footer stack
+            header: function(currentPage, pageCount) {
+                return {
+                    text: 'UNIFED-PROBATUM | PARECER TÉCNICO FORENSE',
+                    alignment: 'center',
+                    fontSize: 8,
+                    margin: [0, 20, 0, 0],
+                    color: '#64748b'
+                };
+            },
             footer: function(currentPage, pageCount) {
                 return {
                     stack: [
-                        { canvas: [{ type: 'line', x1: 40, y1: 0, x2: 555, y2: 0, lineWidth: 0.75, lineColor: '#1e3a8a' }], margin: [0, -12, 0, 8] },
-                        { text: 'Página ' + currentPage + ' de ' + pageCount, style: 'footerLine1', alignment: 'center' },
-                        { text: 'Master Hash SHA-256: ' + (m.masterHash || 'INDISPONÍVEL'), style: 'footerLine2', alignment: 'center' }
-                    ],
-                    margin: [0, 0, 0, 0]
+                        { canvas: [{ type: 'line', x1: 40, y1: 5, x2: 555, y2: 5, lineWidth: 0.5, lineColor: '#94a3b8' }] },
+                        { text: 'Master Hash SHA-256: ' + (m.masterHash || 'INDISPONÍVEL') + ' | Página ' + currentPage + ' de ' + pageCount, alignment: 'center', fontSize: 7, margin: [0, 10, 0, 0], color: '#64748b' }
+                    ]
                 };
             },
+            content: construirConteudoDinamicoAnalista(m, sankeyImg, atfImg, qrCodeImg),
             fonts: {
                 Roboto: {
                     normal: 'Roboto-Regular.ttf',

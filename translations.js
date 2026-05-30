@@ -183,7 +183,13 @@ window.UNIFED_TRANSLATIONS.DICTIONARY = {
     'error_data_missing': { 'pt': '❌ Dados Insuficientes', 'en': '❌ Insufficient Data' },
     'error_merkle_failed': { 'pt': '❌ Erro ao Gerar Árvore de Merkle', 'en': '❌ Error Generating Merkle Tree' },
     'error_export_failed': { 'pt': '❌ Erro na Exportação', 'en': '❌ Export Error' },
-    'error_validation_failed': { 'pt': '❌ Validação Falhou', 'en': '❌ Validation Failed' }
+    'error_validation_failed': { 'pt': '❌ Validação Falhou', 'en': '❌ Validation Failed' },
+
+    // ── RETIFICAÇÃO 2: Terminologia jurídica EN-US (reunião Moraes Leitão) ──
+    'EIXO_A':             { 'pt': 'Cadeia de Custódia (ISO 27037)',   'en': 'Chain of Custody (ISO 27037)'        },
+    'OMISSAO_FATURACAO':  { 'pt': 'Omissão de Faturação',             'en': 'Invoicing Omission / Underreporting' },
+    'RELATORIO_TECNICO':  { 'pt': 'Parecer Técnico Forense',          'en': 'Expert Forensic Report'              },
+    'SUJEITO_PASSIVO':    { 'pt': 'Sujeito Passivo',                  'en': 'Respondent / Taxpayer'               }
 };
 
 // ============================================================================
