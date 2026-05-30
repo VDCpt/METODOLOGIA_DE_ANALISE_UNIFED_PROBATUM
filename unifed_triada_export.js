@@ -715,8 +715,8 @@
 
         content.push(
             { text: formatHeading('NOTA METODOLÓGICA FORENSE — MÉTODO: DATA PROXY: FLEET EXTRACT:', 2), style: 'h2', color: '#1e3a8a', margin: [0, 0, 0, 4], tocItem: true },
-            { text: sanitizeText('"Dada a latência administrativa na disponibilização do ficheiro SAF-T (.xml) pelas plataformas, a presente perícia utiliza o método de Data Proxy: Fleet Extract. Esta metodologia consiste na extração de dados brutos primários diretamente do portal de gestão (Fleet). O ficheiro \'Ganhos da Empresa\' (Fleet/Ledger) é aqui tratado como o Livro-Razão (Ledger) de suporte, possuindo valor probatório material por constituir a fonte primária dos registos que integram o reporte fiscal final. A integridade desta extração é blindada através da assinatura digital SHA-256 (Hash)...'), style: 'normal', color: '#334155', margin: [0, 0, 0, 6], lineHeight: 1.5 },
-            { text: sanitizeText('FUNDAMENTAÇÃO DA PROVA MATERIAL: Para efeitos de prova legal de rendimentos reais, consideram-se os ficheiros operacionais que contêm o rasto digital de centenas de viagens efetivamente realizadas. Este conteúdo reflete a atividade económica real do operador, sendo por isso elevado à categoria de Documento de Suporte (Ledger). Esta metodologia permite detetar e corrigir as discrepâncias omissas nos ficheiros de reporte simplificado, assegurando uma reconstrução financeira rigorosa e auditável em sede judicial, em conformidade com o Decreto-Lei n.º 28/2019 e os princípios de cadeia de custódia previstos no Art. 125.º do CPP.'), style: 'normal', color: '#334155', margin: [0, 0, 0, 12], lineHeight: 1.5 },
+            { text: sanitizeText('Dada a latência administrativa na disponibilização do ficheiro SAF-T (.xml), a presente perícia utiliza o método de Data Proxy: Fleet Extract em formato ".csv". O ficheiro \'Ganhos da Empresa\' (Fleet/Ledger) em formato "PDF" é tratado como Livro-Razão (Ledger) de suporte. Os valores referenciados como "Extrato de saldo/Ganhos líquidos" constituem os pagamentos efetivamente liquidados ao Operador TVDE.'), style: 'normal', color: '#334155', margin: [0, 0, 0, 6], lineHeight: 1.5 },
+            { text: sanitizeText('FUNDAMENTAÇÃO DA PROVA MATERIAL: O Operador TVDE é a entidade (ENI ou Coletiva) registada no IMT responsável por faturar e processar impostos. A centralização da emissão documental pelas plataformas (Art. 36.º n.º 11 CIVA) gera um desequilíbrio informativo. Esta metodologia (CSV/PDF) permite reconstruir o rasto digital de centenas de viagens, corrigindo discrepâncias omissas nos reportes simplificados, em conformidade com o D.L. n.º 28/2019 e o Art. 125.º do CPP.'), style: 'normal', color: '#334155', margin: [0, 0, 0, 12], lineHeight: 1.5 },
             { text: formatHeading('PROTOCOLO DE CADEIA DE CUSTÓDIA', 2), style: 'h2', color: '#1e3a8a', margin: [0, 0, 0, 4], tocItem: true },
             { text: sanitizeText('O sistema UNIFED - PROBATUM assegura a inviolabilidade dos dados através de funções criptográficas SHA-256. As seguintes evidências foram processadas e incorporadas na análise, garantindo a rastreabilidade total da prova:'), style: 'normal', color: '#334155', margin: [0, 0, 0, 6] }
         );
@@ -1428,13 +1428,38 @@
 
             m.masterHash = currentMasterHash;
             const discrepanciaReceita = m.saftGross - m.dac7Total;
+            // RETIFICAÇÃO 4: Motor de questões dinâmico via computeTopQuestions
             let top3Html = '';
-            if (m.top3Questions && m.top3Questions.length > 0) {
-                top3Html = m.top3Questions.map(function(q, idx) {
-                    return (idx+1) + '. ' + q.text + ' (Eixo ' + q.axis + ', Score: ' + q.relevanceScore + ')\n   NORMA: ' + q.norma + '\n   IMPLICAÇÃO: ' + q.implicacao;
+            let top3Source = (m.top3Questions && m.top3Questions.length > 0) ? m.top3Questions : null;
+
+            // Fallback dinâmico: se top3Questions não foi pre-computado, calcular agora
+            if (!top3Source && window.UNIFED_QUESTIONNAIRE && typeof window.UNIFED_QUESTIONNAIRE.computeTopQuestions === 'function') {
+                try {
+                    const analysisMetrics = {
+                        omissionPct:      m.omissionPct      || 0,
+                        frotaSize:        m.frotaSize        || 0,
+                        periodsCovered:   m.periodsCovered   || 0,
+                        cadducityYears:   m.cadducityYears   || 0,
+                        verdict:          m.verdict          || 'RISCO_BAIXO',
+                        ivaOmitted:       m.ivaOmitido       || 0,
+                        btorDivergence:   m.btorDivergence   || 0,
+                        revenueGap:       m.revenueGap       || 0,
+                        expenseGap:       (m.btorLedger - m.btfInvoice) || 0,
+                        saftGross:        m.saftGross        || 0
+                    };
+                    top3Source = window.UNIFED_QUESTIONNAIRE.computeTopQuestions(analysisMetrics);
+                    triadaLog('info', '[QUESTIONNAIRE] TOP 3 calculado dinamicamente via computeTopQuestions (' + top3Source.length + ' questões).');
+                } catch (qErr) {
+                    triadaLog('warn', '[QUESTIONNAIRE] Falha no computeTopQuestions: ' + qErr.message);
+                }
+            }
+
+            if (top3Source && top3Source.length > 0) {
+                top3Html = top3Source.map(function(q, idx) {
+                    return (idx+1) + '. ' + q.text + ' (Eixo ' + q.axis + (q.relevanceScore ? ', Score: ' + q.relevanceScore : '') + ')\n   NORMA: ' + q.norma + '\n   IMPLICAÇÃO: ' + q.implicacao;
                 }).join('\n\n');
             } else {
-                top3Html = '[Nenhuma questão adversarial disponível. Execute a análise para gerar as TOP 3 questões.]';
+                top3Html = '[Nenhuma questão adversarial disponível. Verifique se o módulo UNIFED_QUESTIONNAIRE está carregado.]';
             }
 
             const placeholders = {

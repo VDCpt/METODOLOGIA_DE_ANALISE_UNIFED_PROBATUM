@@ -5706,6 +5706,28 @@ if (!UNIFEDSystem.demoMode && !UNIFEDSystem.casoRealAnonimizado) {
                 : {};
         };
 
+        // ── RETIFICAÇÃO 2b: toggleSandboxBanner ──
+        /**
+         * Controla a visibilidade do banner de SANDBOX.
+         * Invocado na inicialização e após activação do modo DEMO.
+         * @param {boolean} show - true para exibir, false para ocultar
+         */
+        window.toggleSandboxBanner = function(show) {
+            const banner = document.getElementById('sandboxBanner');
+            if (banner) {
+                banner.style.display = show ? 'block' : 'none';
+                const dict = window.UNIFED_TRANSLATIONS && window.UNIFED_TRANSLATIONS.DICTIONARY;
+                banner.innerText = (dict && dict.SANDBOX_LABEL)
+                    ? dict.SANDBOX_LABEL
+                    : 'STATUS: AMBIENTE DE DEMONSTRAÇÃO (SANDBOX) | INTEGRIDADE: DETERMINÍSTICA';
+            }
+        };
+
+        // Activar banner de SANDBOX em modo DEMO
+        if (window.UNIFED_CONFIG && window.UNIFED_CONFIG.modo === 'DEMO') {
+            window.toggleSandboxBanner(true);
+        }
+
         // Libertar interface após setup completo
         libertarInterfaceDemonstracao();
 

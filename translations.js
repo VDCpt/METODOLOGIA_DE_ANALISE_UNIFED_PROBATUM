@@ -189,7 +189,14 @@ window.UNIFED_TRANSLATIONS.DICTIONARY = {
     'EIXO_A':             { 'pt': 'Cadeia de Custódia (ISO 27037)',   'en': 'Chain of Custody (ISO 27037)'        },
     'OMISSAO_FATURACAO':  { 'pt': 'Omissão de Faturação',             'en': 'Invoicing Omission / Underreporting' },
     'RELATORIO_TECNICO':  { 'pt': 'Parecer Técnico Forense',          'en': 'Expert Forensic Report'              },
-    'SUJEITO_PASSIVO':    { 'pt': 'Sujeito Passivo',                  'en': 'Respondent / Taxpayer'               }
+    'SUJEITO_PASSIVO':    { 'pt': 'Sujeito Passivo',                  'en': 'Respondent / Taxpayer'               },
+
+    // ── RETIFICAÇÃO: Terminologia TVDE e Monopólio Documental ──
+    'OPERADOR_TVDE_DEF':   'Operador TVDE: Entidade (singular ou coletiva) registada no IMT, titular da licença, frota e contratos ativos. Responsável legal, fiscal e laboral (IVA/IRS/IRC).',
+    'PLATFORM_MONOPOLY_NOTE': 'Nos termos do Art. 36.º n.º 11 do CIVA, a centralização da emissão documental pela plataforma cria um monopólio de facto, resultando em penalização indevida do sujeito passivo por omissões de terceiros.',
+    'COMPLIANCE_BADGE':    'CERTIFICAÇÕES & CONFORMIDADE',
+    'COMPLIANCE_ITEMS':    ['ISO 27001', 'ISO 27035', 'ISO 27037', 'Privacy by Design', 'Processamento 100% local (browser)'],
+    'SANDBOX_LABEL':       'STATUS: AMBIENTE DE DEMONSTRAÇÃO (SANDBOX) | TIMESTAMP: RELATÓRIO DE VALIDAÇÃO DE INTEGRIDADE PENDENTE (RFC 3161) | INTEGRIDADE: DETERMINÍSTICA'
 };
 
 // ============================================================================
